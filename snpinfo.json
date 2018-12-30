@@ -1,0 +1,2 @@
+// Sample Save - {"server-id":<true/false>} - depending on whether or not to show the Now Playing information every song change.
+// You can easily change this data from PHP pages, so a json file may seem useful.
