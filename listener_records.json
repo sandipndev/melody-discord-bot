@@ -1,1 +1,1 @@
-// Sample Save - {"discord_user_id" : {"songname":"sample song name", "count": <a number indicating the number of times the song is heard by that user>, "songurl":"youtube_url_of_the_song">}}
+// Sample Save - {"discord_user_id" : {"songname":"sample song name", "count": "<a number indicating the number of times the song is heard by that user>", "songurl":"youtube_url_of_the_song"}}
