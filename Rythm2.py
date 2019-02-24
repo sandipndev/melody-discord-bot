@@ -1,4 +1,4 @@
-# Dependencies needed: 
+# Dependencies needed:
 #  - youtube_dl
 #  - PyNaCl
 #  - opus (or libopus)
@@ -230,7 +230,6 @@ class Rythm2:
 				server_ids.append(s.id)
 			for vc_key in self.voice_clients.keys():
 				if vc_key not in server_ids:
-					print("Deleting.")
 					await self.voice_clients[vc_key].vc.disconnect()
 					del self.voice_clients[vc_key]
 					break
@@ -421,7 +420,6 @@ class Rythm2:
 
 		if self.voice_clients[ctx.message.server.id].current_song_obj is None and self.voice_clients[ctx.message.server.id].is_queue_empty() and self.voice_clients[ctx.message.server.id].first_song_getting_added != True:
 			self.voice_clients[ctx.message.server.id].first_song_getting_added = True
-			print("1st")
 
 		# Checking if url or not
 		url = False
@@ -452,7 +450,7 @@ class Rythm2:
 				with youtube_dl.YoutubeDL(ytdl_options) as ydl:
 					info_dict = ydl.extract_info(songname, download=False) # To get information about the song
 					return info_dict
-			
+
 		try:
 			#Searching prompt
 			await self.client.say("**Searching** `{}` :mag_right:".format(songname))
@@ -468,7 +466,6 @@ class Rythm2:
 			song_object = Song(songname, ctx.message.author, songinfo)
 			# Adding the Song object to current server's queue
 			if self.voice_clients[ctx.message.server.id].first_song_getting_added != True:
-				print("s 5")
 				await asyncio.sleep(5)
 			pos = self.voice_clients[ctx.message.server.id].add_song_to_queue(song_object)
 			if pos == 1 and self.voice_clients[ctx.message.server.id].current_song_obj is None:
@@ -488,7 +485,6 @@ class Rythm2:
 				embed.add_field(inline = True, name = "Duration", value = "{}{}{}".format(hms_tuple[0], hms_tuple[1], hms_tuple[2]))
 				embed.add_field(inline = True, name = "Position in Queue", value = str(pos))
 				if self.voice_clients[ctx.message.server.id].current_song_obj is None:
-					print("wait 5 s")
 					await asyncio.sleep(5)
 				eta = self.voice_clients[ctx.message.server.id].eta(len(self.voice_clients[ctx.message.server.id].queue)-1)
 				hms = await self.client.loop.run_in_executor(None, hh_mm_ss, eta)
@@ -747,7 +743,7 @@ class Rythm2:
 				embed.color = 564712
 				embed.set_author(name = "Queue for {}".format(ctx.message.server.name), icon_url= music_logo_url)
 				embed.description = "\n__Now Playing__:\n{}\n{}\n**ADD** more *songs* as **queue** is **Empty**!\n\n**{} songs in queue | {} to complete queue**".format(np_string_info, info, "NO", etaq)
-				
+
 				await self.client.say(embed = embed)
 			elif self.voice_clients[ctx.message.server.id].is_queue_empty() and self.voice_clients[ctx.message.server.id].is_playing() != True:
 				await self.client.say(embed = emb("**Nothing is playing in this server.** :dolphin:"))
@@ -1268,7 +1264,7 @@ class Rythm2:
 			# Called in a server text channel
 			await self.client.say(embed = emb("**Dedications are a secret.** :wink:\n**You'll have to private message me the song you wanna dedicate.**"))
 			return
-		
+
 		intended_server = None
 		others_in_intended_server = []
 		for thisservervc in self.voice_clients.values():
@@ -1333,7 +1329,7 @@ class Rythm2:
 				with youtube_dl.YoutubeDL(ytdl_options) as ydl:
 					info_dict = ydl.extract_info(songname, download=False) # To get information about the song
 					return info_dict
-			
+
 		try:
 			#Searching prompt
 			await self.client.send_message(ctx.message.author, "**Searching** `{}` :mag_right:".format(songname))
@@ -1388,12 +1384,12 @@ class Rythm2:
 			else:
 				await self.client.send_message(ctx.message.author, embed = emb("**The length of this message must be less than or equal to 1024**"))
 				continue
-		
+
 		if dedicationinfo.content.strip().lower() == "na":
 			dedicationinfo = None
 		else:
 			dedicationinfo = dedicationinfo.content.strip().title()
-	
+
 		# Proper integer input
 		pos = int(message)
 		# Dedication
