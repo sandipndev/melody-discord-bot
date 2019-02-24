@@ -71,7 +71,7 @@ class VoiceClient:
 		self.current_song_obj = None # Current Song object
 		self.current_player = None # Current Song Player
 		self.current_player_time_started = 0 # To record time when song was started
-		self.current_player_total_paused = 0 # To record total pause time 
+		self.current_player_total_paused = 0 # To record total pause time
 		self.current_player_time_paused = 0 # To record time paused
 
 		self.volume = 1
@@ -93,7 +93,7 @@ class VoiceClient:
 		vol = vol/100
 		if self.current_player is not None:
 			self.current_player.volume = vol
-			self.volume = vol		
+			self.volume = vol
 
 	def check_dj(self, mem):
 		for x in mem.roles:
@@ -143,7 +143,7 @@ class VoiceClient:
 		self.current_song_obj = None # Current Song object
 		self.current_player = None # Current Song Player
 		self.current_player_time_started = 0 # To record time when song was started
-		self.current_player_total_paused = 0 # To record total pause time 
+		self.current_player_total_paused = 0 # To record total pause time
 		self.current_player_time_paused = 0 # To record time paused
 		self.time_to_delay = 300
 		self.first_song_getting_added = False
@@ -243,11 +243,11 @@ class VoiceClient:
 						except:
 							pass
 					self.npmsg = None
-				
+
 				del_reac()
 
 				self.current_player_time_started = time.time() # To record time when song was started
-				self.current_player_total_paused = 0 # To record total pause time 
+				self.current_player_total_paused = 0 # To record total pause time
 				self.current_player_time_paused = 0 # To record time paused
 
 			except IndexError:
@@ -431,7 +431,7 @@ class VoiceClient:
 		"""Play the song in this task"""
 		while True:
 			# To play songs and listen continuously for new songs added.
-			
+
 			# First song to self.current_player_object
 			if len(self.queue) == 1 and self.current_song_obj is None :
 				# Current Song is the first song object added.
@@ -446,11 +446,12 @@ class VoiceClient:
 				# URL of the song
 				url = self.current_song_obj.get_song_url()
 				# Creating the song player
-				self.current_player = await self.vc.create_ytdl_player(url, ytdl_options = {'quiet':True}, after=self.add_next)
+				self.current_player = await self.vc.create_ytdl_player(url, ytdl_options = {'quiet':True}, before_options = " -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5", after=self.add_next)
 				self.current_player.volume = self.volume
 				if self.current_song_obj is not None:
 					# Starting the song player
 					self.current_player.start()
+					print("Playing {}".format(self.current_song_obj.songinfo['title'].strip().title()))
 					self.current_player_time_started = time.time()
 
 					# 2 minutes delayed in case of disconnect because of no members
@@ -476,7 +477,7 @@ class VoiceClient:
 				if len(members) > 1 and self.disconnect_timer != 0 and not (self.is_queue_empty() and not self.is_playing()):
 					self.should_disconnect = False
 					self.disconnect_timer = 0
-				
+
 				if len(members) == 1:
 					# Nobody is hearing this song. That one member is the bot itself.
 					if self.disconnect_timer == 0:
@@ -488,7 +489,7 @@ class VoiceClient:
 					if self.disconnect_timer == 0:
 						self.disconnect_timer = time.time()
 					elif (time.time() - self.disconnect_timer) > self.time_to_delay:
-						self.should_disconnect = True 
+						self.should_disconnect = True
 
 			handle_disconnection()
 
