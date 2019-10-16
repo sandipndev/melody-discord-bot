@@ -4,7 +4,7 @@ import asyncio
 from song_download import SongDL
 import functools
 
-TOKEN = "" # Give your Discord Access Token here
+TOKEN = "NjMzODM5MDg1NTY3NDc1NzY2.XaZyvw.MI457hyrMPvd4vypJA32P1Sb_LU" # Give your Discord Access Token here
 client = commands.Bot(command_prefix = 'm/')
 
 startup_extensions = ["Rythm2"]

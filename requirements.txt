@@ -1,0 +1,4 @@
+discord.py==0.16.12
+asyncio
+youtube_dl
+PyNaCl
